@@ -8,7 +8,7 @@
 /.fleet
 /.idea
 /.nova
-/.phpunit.cache
+/.phpunit.cachephp
 /.vscode
 /.zed
 /auth.json
