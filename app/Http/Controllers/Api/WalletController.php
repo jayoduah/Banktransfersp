@@ -18,7 +18,11 @@ class WalletController extends Controller
 
         $wallet = $request->user()->wallets()->firstOrCreate(
             ['type' => $request->type],
-            ['balance' => 0.00]
+            ['balance' => 0.00],
+            [
+                'currency' => $request->type === 'naira' ? 'NGN' : ($request->type === 'dollar' ? 'USD' : 'NGN'),
+            ],
+
         );
 
         return response()->json(['message' => 'Account ready', 'wallet' => $wallet]);
@@ -29,7 +33,7 @@ class WalletController extends Controller
     {
         $query = $request->user()->wallets();
         
-        if ($request->has('type')) {
+        if ($request->has('type') && in_array($request->type, ['naira', 'dollar', 'bank'])) {
             $query->where('type', $request->type);
         }
 
